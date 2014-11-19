@@ -106,7 +106,7 @@ gmail_storage: default.gmail
 
 The filenames (e.g. default_cs.json) can be a relative path or fully qualified path (e..g /home/user/default_cs.json).  If it's a relative path, then it will look for the file in the same directory as the config file.
 
-You can use these
+If you have a case where you want to run this script with multiple gmail accounts, you could create a set of files for each account.
 
 ## Known Issues
 
