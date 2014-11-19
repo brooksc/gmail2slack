@@ -1,0 +1,7 @@
+slack_apikey: foo
+slack_user: yourname
+slack_from: gmail2slack
+client_secret: default_cs.json
+gmail2slack_pickle: default.pickle
+gmail2slack_oauth: default.oauth
+gmail_storage: default.gmail
