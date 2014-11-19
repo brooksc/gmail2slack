@@ -125,7 +125,7 @@ def main():
     parser.add_argument("-v", "--verbose", help="verbosity", action="store_true")
     parser.add_argument("-c", "--config", help="path to gmail2slack.yaml", action="store",
                         default=os.getenv("HOME") + "/.config/gmail2slack/default.yaml")
-    parser.add_argument("-l", "--loop", help="loop every x seconds (default 60)", action="store", default=60)
+    parser.add_argument("-l", "--loop", help="loop every x seconds", action="store", default=0)
     args = parser.parse_args()
 
     try:
@@ -149,17 +149,19 @@ def main():
         sys.exit("Unable to open client_secret file %s" % config['client_secret'])
 
     g2s = Gmail2Slack(config, slack)
-
-    loop = True
-    while loop:
+    if int(args.loop) > 0:
+        delay = int(args.loop)
+    else:
+        delay = 0
+    while True:
         try:
             g2s.gmail2slack()
         except:
             traceback.print_exc()
-        if args.loop:
-            time.sleep(int(args.loop))
+        if delay:
+            time.sleep(delay)
         else:
-            loop = False
+            break
 
 
 if __name__ == "__main__":

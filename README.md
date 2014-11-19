@@ -1,5 +1,5 @@
-gmail2slack
-===========
+# gmail2slack
+
 
 This program will monitor your gmail inbox and when you receive a new email, it will send you a notification on slack.
 
@@ -10,10 +10,12 @@ Installation
 1. Download this script
 2. run `pip -r requirements.txt` to install the various libraries required
 
-Configuration
+## Configuration
+
 
 gmail2slack config files by default are stored in the directory ~/.config/gmail2slack.  Create this directory.
 
+### Get a Gmail API Key
 Next you'll need a Gmail API Key
 
 1. Obtain a google API key by visiting https://console.developers.google.com/project, create a project
@@ -24,10 +26,12 @@ Next you'll need a Gmail API Key
 6. Click Installed Application again and Other
 7. You should now have a Client ID for Native Application.  You'll need the Client ID and Client Secret later...
 
+### Create default_cs.json config
+
 Next you'll want to create a file with a name of ~/.config/gmail2slack/default_cs.json
 
 Add this file:
-
+```
 {
   "installed": {
     "client_id": "foo",
@@ -37,8 +41,11 @@ Add this file:
     "token_uri": "https://accounts.google.com/o/oauth2/token"
   }
 }
+```
 
 But replace the foo value in client_id and client_secret with what you generated from the gmail APi
+
+### Get a Slack API Key
 
 Next, get a Slack API key.
 
@@ -46,8 +53,10 @@ Next, get a Slack API key.
 2. Sign in if you need to
 3. Click Get Token
 
-Last step - add the following to ~/.config/gmail2slack/default.yaml
+### Create default.yaml
 
+Last step - add the following to ~/.config/gmail2slack/default.yaml
+```
 slack_apikey: foo
 slack_user: yourname
 slack_from: gmail2slack
@@ -55,17 +64,50 @@ client_secret: default_cs.json
 gmail2slack_pickle: default.pickle
 gmail2slack_oauth: default.oauth
 gmail_storage: default.gmail
+```
 
 Change foo to the slack API key
 Change yourname to your alias in slack
 
 The rest you can leave as is.
 
+## Let's run this thing!
 
+### Run Once
 
+If you are using the default_cs.json and default.yaml in ~/.config/gmail2slack as described above, then just run
 
+`gmail2slack`
 
+It will check your inbox, send any slack notifications and exit.  This should be good for running fron cron, etc.
 
+When you run the script the first time, it will open a local browser (if possible) and ask you to sign in to gmail and give the script access to your gmail account.
 
+### Run Forever
 
+If you want to have it loop forever and sleep in between checks, run it with the -l command with an argument of the number of seconds to sleep.  For example
 
+`gmail2slack -l 60`
+
+## Use a different config file
+
+You can use the -c option to specify another directory for the config files, like
+
+`gmail2slack -c ~/.gmail2slack.cfg`
+
+For the following keys:
+
+```
+client_secret: default_cs.json
+gmail2slack_pickle: default.pickle
+gmail2slack_oauth: default.oauth
+gmail_storage: default.gmail
+```
+
+The filenames (e.g. default_cs.json) can be a relative path or fully qualified path (e..g /home/user/default_cs.json).  If it's a relative path, then it will look for the file in the same directory as the config file.
+
+You can use these
+
+## Known Issues
+
+The script doesn't work with cron on the mac for some reason, the issue is being investigated.
