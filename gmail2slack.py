@@ -17,6 +17,8 @@ from slacker import Slacker
 import os
 import sys
 import argparse
+from oauth2client.client import AccessTokenRefreshError
+
 
 from yaml import load
 
@@ -79,7 +81,11 @@ class Gmail2Slack():
         pickle.dump(self.state, open(self.config['gmail2slack_pickle'], "wb"))
 
     def gmail2slack(self):
-        response = self.gmail_service.users().messages().list(userId=self.user_id, labelIds="INBOX").execute()
+        try:
+            response = self.gmail_service.users().messages().list(userId=self.user_id, labelIds="INBOX").execute()
+        except AccessTokenRefreshError:
+            return
+
         message_ids = []
         if 'messages' in response:
             message_ids.extend(response['messages'])
