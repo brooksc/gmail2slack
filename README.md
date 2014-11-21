@@ -108,6 +108,27 @@ The filenames (e.g. default_cs.json) can be a relative path or fully qualified p
 
 If you have a case where you want to run this script with multiple gmail accounts, you could create a set of files for each account.
 
+## Run from crontab
+
+The easiest way to run this script is from crontab, have it once a minute (or whatever frequency) check for emails.  
+
+since there a number of python dependencies, I use virtualenv to contain them in a directory like ~/.virtualenv/default.  I then created a script like the one below:
+
+```
+#!/bin/sh
+source ~/.virtualenv/default/bin/activate
+~/github/gmail2slack/gmail2slack.py
+```
+
+which I saved to gmail2slack.sh and then run `crontab -e` and add a line like:
+
+```
+* * * * * ~/brooksc/github/gmail2slack.sh
+```
+
+Of course change the paths to match your environment
+
+
 ## Known Issues
 
-The script doesn't work with cron on the mac for some reason, the issue is being investigated.
+None -- I can 
