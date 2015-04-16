@@ -8,7 +8,7 @@ This is useful if you spend your day in slack talking with your team and at time
 Installation
 
 1. Download this script
-2. run `pip -r requirements.txt` to install the various libraries required
+2. run `pip install -r requirements.txt` to install the various libraries required
 
 ## Configuration
 
