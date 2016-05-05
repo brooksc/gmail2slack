@@ -12,7 +12,7 @@ from oauth2client.file import Storage
 
 # from pprint import pprint
 
-from apiclient.discovery import build
+from googleapiclient.discovery import build
 from slacker import Slacker
 import os
 import sys
