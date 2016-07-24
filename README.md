@@ -24,7 +24,8 @@ Next you'll need a Gmail API Key
 4. Select Installed Application and click Configure
 5. Select your email address, enter a product name like gmail2slack.  Click Save
 6. Click Installed Application again and Other
-7. You should now have a Client ID for Native Application.  You'll need the Client ID and Client Secret later...
+7. In the O-Auth-Client enter `http://localhost:8080/` as authorized redirect URL
+8. You should now have a Client ID for Native Application.  You'll need the Client ID and Client Secret later...
 
 ### Create default_cs.json config
 
