@@ -66,10 +66,10 @@ class Gmail2Slack():
         self.gmail_service = build('gmail', 'v1', http=http)
         self.user_id = 'me'
 
-	if 'gmail_label' in self.config:
-	    self.label_name = self.config['gmail_label']
-	else:
-	    self.label_name = 'INBOX'
+        if 'gmail_label' in self.config:
+            self.label_name = self.config['gmail_label']
+        else:
+            self.label_name = 'INBOX'
 
         try:
             self.state = pickle.load(open(self.config['gmail2slack_pickle'], "rb"))
@@ -86,17 +86,17 @@ class Gmail2Slack():
         pickle.dump(self.state, open(self.config['gmail2slack_pickle'], "wb"))
 
     def getLabelIdByName(self,name):
-	response=self.gmail_service.users().labels().list(userId=self.user_id).execute()
-	if "labels" in response:
-	    for label in response["labels"]:
-		if label["name"] == name:
-		    return label["id"]
-	return None
+        response=self.gmail_service.users().labels().list(userId=self.user_id).execute()
+        if "labels" in response:
+            for label in response["labels"]:
+                if label["name"] == name:
+                    return label["id"]
+        return None
 
     def gmail2slack(self):
         try:
-	    label_id = self.getLabelIdByName(self.label_name)
-	    if not label_id: raise Exception("target label name not found")
+            label_id = self.getLabelIdByName(self.label_name)
+            if not label_id: raise Exception("target label name not found")
             response = self.gmail_service.users().messages().list(userId=self.user_id, labelIds=label_id).execute()
         except AccessTokenRefreshError:
             return
